@@ -1,4 +1,4 @@
-import  { useState } from 'react';
+import { useState } from 'react';
 
 import { GoogleOAuthProvider } from '@react-oauth/google';
 import { GoogleLogin } from '@react-oauth/google';
@@ -9,6 +9,7 @@ import { changeUserProfile } from '../Redux/userProfileReducer';
 import axios from '../Utilities/axios';
 import { GOOGLE_AUTH } from '../Utilities/Constants';
 import { errorTost } from './Modals/tost';
+import { changeLoading } from '../Redux/loadingReducer';
 
 
 function GoogleAuth() {
@@ -23,6 +24,7 @@ function GoogleAuth() {
 
 
     const handleLoginSuccess = async (response: any) => {
+        dispatch(changeLoading(true));
         const token = response.credential;
         //send token to server
         axios.get(GOOGLE_AUTH(token)).then((response) => {
@@ -34,12 +36,15 @@ function GoogleAuth() {
                 const userPhoto = user.profile_image
                 const userPhone = user.phone_number
                 dispatch(changeUserProfile({ userName, userEmail, userPhoto, userPhone }))
+
                 navigate(redirectPath, { replace: true })
+                dispatch(changeLoading(false));
             } else if (response.status === 202) {
                 //else, navigate to addProfile page with data received in search params
-                navigate('/register/add-profile', { state: user })
-            }
 
+                navigate('/register/add-profile', { state: user })
+                dispatch(changeLoading(false));
+            }
         }).catch((error) => {
             console.log(error);
             errorTost('Google auth failed !')
@@ -61,7 +66,7 @@ function GoogleAuth() {
                     useOneTap
                     text="continue_with"
                     size='large'
-                    // width='300'
+                // width='300'
                 />
             </GoogleOAuthProvider>
             {error && (
@@ -69,6 +74,8 @@ function GoogleAuth() {
                     {error}
                 </div>
             )}
+
+
         </div>
     );
 }
