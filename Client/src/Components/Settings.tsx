@@ -80,7 +80,7 @@ function Settings() {
     return (
         <div className="md:pl-16 pt-12">
             <div className="w-full md:w-full lg:w-3/4 p-6 mx-auto">
-                <div className="intro-y text-xl font-medium">Settings</div>
+                <div className="intro-y text-xl font-medium">Profile</div>
                 <div className="grid grid-cols-12 gap-6 mt-2">
                     <div className="intro-y col-span-12 lg:col-span-6">
                         <div className="intro-y box p-4">
