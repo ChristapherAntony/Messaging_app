@@ -4,6 +4,7 @@ import { ERROR } from "../../../frameworks/webserver/common/errors";
 import UserEntity from "../../entities/user";
 import authServiceInt from "../../services/authServiceInt";
 import cloudStorageServiceInt from "../../services/cloudStorageServiceInt";
+import config from "../../../config";
 
 const googleAuthentication = async (googleToken: any, authRepositoryInt: authRepositoryInt, authServiceInt: authServiceInt,
     cloudStorageServiceInt: cloudStorageServiceInt
@@ -39,7 +40,11 @@ const googleAuthentication = async (googleToken: any, authRepositoryInt: authRep
         //get profile image url from s3
         userData.profile_image = await cloudStorageServiceInt.getFile(userData.profile_image.toString())
         //need to sign jwt 
-        const token = authServiceInt.generateToken(existingUser._id.toString());
+        const payload = {
+            userId: existingUser._id.toString(),
+            roles: [config.authRoles.user]
+        }
+        const token = authServiceInt.generateToken(payload);
 
         return { userData, token }
     } else {

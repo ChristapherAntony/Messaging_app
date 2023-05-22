@@ -1,3 +1,4 @@
+import config from "../../../config";
 import { ERROR } from "../../../frameworks/webserver/common/errors";
 import authRepositoryInt from "../../repositories/authRepositoryInt";
 import authServiceInt from "../../services/authServiceInt";
@@ -20,7 +21,11 @@ const login = async (phone_number: string, password: string, authRepositoryInt: 
     }
     
     //sign jwt
-    const token = authServiceInt.generateToken(existingUser._id.toString());
+    const payload = {
+        userId: existingUser._id.toString(),
+        roles: [config.authRoles.user]
+    }
+    const token = authServiceInt.generateToken(payload);
 
     return {existingUser,token}
 

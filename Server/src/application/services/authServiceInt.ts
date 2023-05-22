@@ -9,7 +9,7 @@ const authServiceInt = (service: authServiceImp) => {
 
   const verifyPassword = (token: string) => service.verifyToken(token)
 
-  const generateToken = (payload: string) => service.generateToken(payload);
+  const generateToken = (payload: any) => service.generateToken(payload);
 
   return {
     encryptPassword,

@@ -14,7 +14,11 @@ const config = {
     bucket_region: process.env.BUCKET_REGION as string,
     cloudfront_private_key: process.env.CLOUDFRONT_PRIVATE_KEY as string,
     cloudfront_key_pair_id: process.env.CLOUDFRONT_KEY_PAIR_ID as string,
-    cloudfront_Distribution_Id: process.env.CLOUDFRONT_DISTRIBUTION_ID as string
+    cloudfront_Distribution_Id: process.env.CLOUDFRONT_DISTRIBUTION_ID as string,
+    authRoles: {
+        admin: "admin",
+        user: "user",
+    },
 
 };
 export type ConfigType = typeof config;

@@ -4,7 +4,7 @@ import config, { ConfigType } from '../../config';
 
 
 
- const authServiceImp = () => {
+const authServiceImp = () => {
     const encryptPassword = async (password: string) => {
         const salt = await bcrypt.genSalt(10);
         password = await bcrypt.hash(password, salt);
@@ -15,15 +15,15 @@ import config, { ConfigType } from '../../config';
         return bcrypt.compare(password, hashedPassword)
     }
 
-    const generateToken = (payload: string) => {
-        const token = jwt.sign({ payload }, config.JWT_SECRET ||'123', {
+    const generateToken = (payload: any) => {
+        const token = jwt.sign(payload, config.JWT_SECRET || '123', {
             expiresIn: "1d",
         });
         return token
     }
 
     const verifyToken = (token: string) => {
-        return jwt.verify(token, config.JWT_SECRET ||'123')
+        return jwt.verify(token, config.JWT_SECRET || '123')
     }
 
     return {

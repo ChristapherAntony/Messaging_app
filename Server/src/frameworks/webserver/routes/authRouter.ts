@@ -9,6 +9,8 @@ import authServiceInt from "../../../application/services/authServiceInt";
 import authServiceImp from "../../services/authService";
 import cloudStorageServiceInt from "../../../application/services/cloudStorageServiceInt";
 import s3StorageServiceImpl from "../../services/s3StorageServiceImpl";
+import authorize from "../middleware/authorize";
+import config from "../../../config";
 // Create a multer instance to handle form data
 const upload = multer();
 
@@ -31,7 +33,8 @@ const authRouter = (router: Router) => {
 
 
     // Additional route
-    router.get('/', (req: Request, res: Response) => {
+    router.get('/',authorize([config.authRoles.user]), (req: Request, res: Response) => {
+
         res.send('This is the router auth');
     });
 

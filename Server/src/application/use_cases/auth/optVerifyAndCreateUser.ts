@@ -1,3 +1,4 @@
+import config from "../../../config"
 import { ERROR } from "../../../frameworks/webserver/common/errors"
 import UserEntity from "../../entities/user"
 import authRepositoryInt from "../../repositories/authRepositoryInt"
@@ -13,7 +14,7 @@ const optVerifyAndCreateUser = async (
 
 
     // 3 reject if fail
-    if (!existingTempUser ) {
+    if (!existingTempUser) {
         throw new ERROR.OTPExpiredError('Otp Expired! Try again...')
     }
     // 2 verify the otp
@@ -30,8 +31,12 @@ const optVerifyAndCreateUser = async (
 
 
     // 5 sign in and send jwt
+    const payload = {
+        userId: newUser._id.toString(),
+        roles: [config.authRoles.user]
+    }
 
-    const token = authServiceInt.generateToken(newUser._id.toString());
+    const token = authServiceInt.generateToken(payload);
 
 
 
