@@ -23,7 +23,7 @@ const profileController = (authRepository: authRepositoryInt, cloudStorageServic
             next(error);
         }
 
-    }
+    } 
 
     return { updateProfilePictureController }
 }
