@@ -39,9 +39,19 @@ const authController = (
             const { phone_number, password } = req.body
             const response = await login(phone_number, password, repository, authService)
             // Store it on session object
-            req.session = {
-                jwt: response.token,
-            };
+            // req.session = {
+            //     jwt: response.token,
+            // };
+
+
+
+            res.cookie('jwt', response.token, {
+                httpOnly: true,
+                secure: false,
+                // signed: false,
+                maxAge: 24 * 60 * 60 * 1000
+            })
+
 
             res.status(200).json(response.existingUser);
         } catch (error) {
@@ -55,10 +65,13 @@ const authController = (
             const response = await optVerifyAndCreateUser(VerificationSID, otp, phone_number, repository, optService, authService)
 
 
-            // Store it on session object
-            req.session = {
-                jwt: response.token,
-            };
+            // Store it on cookie
+            res.cookie('jwt', response.token, {
+                httpOnly: true,
+                secure: false,
+                // signed: false,
+                maxAge: 24 * 60 * 60 * 1000
+            })
 
             res.status(200).json({ user: response.newUser, message: "User Created and signed in  Successfully" })
         } catch (error) {
@@ -72,10 +85,13 @@ const authController = (
             // User is not registered, so further details are required
             if (response.userData.loggedIn) {
 
-                // Store it on req session object
-                req.session = {
-                    jwt: response.token,
-                };
+                // Store it on req cookie
+                res.cookie('jwt', response.token, {
+                    httpOnly: true,
+                    secure: false,
+                    // signed: false,
+                    maxAge: 24 * 60 * 60 * 1000
+                })
 
                 const message = 'User already registered, login successful.';
                 return res.status(200).json({ message, data: response.userData });
@@ -89,7 +105,25 @@ const authController = (
         }
 
     }
-    return { register, googleAuth, veryOtpAndRegister, passwordLogin }
+
+    /**
+    * @desc User logout
+    * @route DELETE /auth/logout
+    * @access public
+    */
+    const logOut = async (req: Request, res: Response, next: NextFunction) => {
+        try {
+            res.clearCookie('jwt')
+
+            res.status(200).json({ message: 'logout successful' })
+        } catch (error) {
+            next(error)
+        }
+    }
+
+
+
+    return { register, googleAuth, veryOtpAndRegister, passwordLogin, logOut }
 }
 
 export default authController

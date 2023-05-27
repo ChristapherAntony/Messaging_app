@@ -14,14 +14,12 @@ interface CurrentUser {
 }
 
 const authenticate = (config: ConfigType) => (req: Request, res: Response, next: NextFunction): void => {
-    if (!req.session?.jwt) {
-        console.log('not autheticated')
+
+    if (!req.cookies['jwt']) {
         return next();
     }
     try {
-        console.log(req.session.jwt,'this is jwt');
-        
-        const payload = jwt.verify(req.session.jwt, config.JWT_SECRET) as CurrentUser;
+        const payload = jwt.verify(req.cookies['jwt'], config.JWT_SECRET) as CurrentUser;
         console.log(payload,'pay load')
         req.currentUser = payload;
     } catch (error) { }

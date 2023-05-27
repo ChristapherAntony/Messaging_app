@@ -28,12 +28,13 @@ const authRouter = (router: Router) => {
     router.route('/register').post(controller.register);
 
     router.route('/login').post(controller.passwordLogin);
+    router.route('/logout').post(controller.logOut);
 
     router.route('/register/otp-verification').post(controller.veryOtpAndRegister);
 
 
     // Additional route
-    router.get('/',authorize([config.authRoles.user]), (req: Request, res: Response) => {
+    router.get('/', authorize([config.authRoles.user]), (req: Request, res: Response) => {
 
         res.send('This is the router auth');
     });

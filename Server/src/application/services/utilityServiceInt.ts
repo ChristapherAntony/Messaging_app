@@ -1,3 +1,4 @@
+import { Response } from "express";
 import utilityServiceImpl, { ImageFit } from "../../frameworks/services/utilityServiceImpl";
 
 const utilityServiceInt = (service: utilityServiceImpl) => {
@@ -8,8 +9,9 @@ const utilityServiceInt = (service: utilityServiceImpl) => {
     const imageResize = (file: Express.Multer.File, height: number, width: number, fit?: ImageFit) => {
         return service.imageResize(file, height, width, fit)
     }
-
-    return { generateFileName, imageResize }
+    const attachTokenToCookie = (cookieName: string, Token: string, res: Response) => service.attachTokenToCookie(cookieName, Token, res);
+    
+    return { generateFileName, imageResize, attachTokenToCookie }
 
 }
 

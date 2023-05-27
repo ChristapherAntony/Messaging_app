@@ -10,7 +10,7 @@ import errorHandlingMiddleware from "./frameworks/webserver/middleware/errorHand
 
 const app: Application = express();
 const router: Router = express.Router()
-app.set('trust proxy', true);  //https 
+// app.set('trust proxy', true);  //https 
 expressConfig(app, config);
 
 routes(app, router);

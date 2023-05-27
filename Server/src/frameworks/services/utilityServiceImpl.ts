@@ -3,6 +3,8 @@ import { v4 as uuidv4 } from 'uuid';
 
 import path from "path";
 import sharp from "sharp";
+import { Response } from 'express';
+import config from '../../config';
 
 export enum ImageFit {
     Cover = 'cover',
@@ -30,8 +32,19 @@ const utilityServiceImpl = () => {
         return await sharp(file.buffer).resize({ height: height, width: width, fit: fit }).toBuffer()
     }
 
+    const attachTokenToCookie = async (cookieName: string, Token: string, res: Response) => {
+        res.cookie(cookieName, Token, {
+            httpOnly: true,
+            secure: config.nodeEnvironment === 'production',
+            // signed: false,
+            maxAge: 24 * 60 * 60 * 1000
+        })
 
-    return { generateFileName, imageResize }
+        return
+    }
+
+
+    return { generateFileName, imageResize, attachTokenToCookie }
 }
 
 

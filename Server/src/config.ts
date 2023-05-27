@@ -19,6 +19,7 @@ const config = {
         admin: "admin",
         user: "user",
     },
+    nodeEnvironment: process.env.NODE_ENV as string
 
 };
 export type ConfigType = typeof config;

@@ -3,14 +3,22 @@ import { Link, useNavigate } from 'react-router-dom'
 import { resetUserProfile } from '../../Redux/userProfileReducer';
 import { useDispatch } from 'react-redux';
 import { AppDispatch } from '../../Redux/store';
-
+import axios from '../../Utilities/axios';
+import { LOGOUT } from '../../Utilities/Constants';
+import { errorTost } from './tost';
 function ProfileDrop() {
     const dispatch: AppDispatch = useDispatch()
 
     const navigate = useNavigate()
     const handleLogout = () => {
-        dispatch(resetUserProfile());
-        navigate('/')
+
+        axios.post(LOGOUT).then((response) => {
+            dispatch(resetUserProfile());
+            navigate('/')
+        }).catch((error) => {
+            console.log(error);
+            errorTost('Try again..')
+        })
     }
     return (
         <div id='dropdown' className=" absolute w-56 top-0 right-0 z-20 mt-16" >

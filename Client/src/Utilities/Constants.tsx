@@ -7,5 +7,6 @@ export const GOOGLE_AUTH = (token: string) => `/auth/google-auth/${token}`
 export const REGISTER = `/auth/register`;
 export const OTP_VERIFY = `/auth/register/otp-verification`;
 export const LOGIN = `/auth/login`;
+export const LOGOUT = `/auth/logout`;
 
 export const PROFILE_IMAGE_UPLOAD = `/profile/image`;

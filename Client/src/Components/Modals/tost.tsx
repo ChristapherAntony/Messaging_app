@@ -1,7 +1,7 @@
-import { ToastContainer, toast } from 'react-toastify';
+import { toast } from 'react-toastify';
 
 
-const successTost = (message:any, time = 5000) => {
+const successTost = (message: string, time = 5000) => {
     toast.success(message, {
         autoClose: time,
         hideProgressBar: true,
@@ -13,9 +13,9 @@ const successTost = (message:any, time = 5000) => {
     });
 }
 
-const errorTost = (message:any, time = 5000) => {
+const errorTost = (message: string, time = 5000) => {
     toast.error(message, {
-        
+
         autoClose: time,
         hideProgressBar: true,
         closeOnClick: true,
@@ -23,9 +23,9 @@ const errorTost = (message:any, time = 5000) => {
         draggable: true,
         progress: undefined,
         theme: "light",
-        });
+    });
 }
 
 
 
-export { successTost ,errorTost}
+export { successTost, errorTost }
