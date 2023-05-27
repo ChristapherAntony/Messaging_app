@@ -13,7 +13,7 @@ import { ConfigType } from "../../config";
 export default function expressConfig(app: Application, config: ConfigType) {
 
     app.use(cors({
-        origin: ['http://localhost:3000', 'https://www.testserver1.cf'],
+        origin: ['http://localhost:3000', 'https://www.testserver1.cf','https://messaging-app-theta.vercel.app'],
         methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
         credentials: true
     }))
