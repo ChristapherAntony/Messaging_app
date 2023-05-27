@@ -5,6 +5,7 @@ import tempRegisterAndSendOtp from "../../application/use_cases/auth/register"
 import { ERROR } from "../../frameworks/webserver/common/errors"
 import optVerifyAndCreateUser from "../../application/use_cases/auth/optVerifyAndCreateUser"
 import login from "../../application/use_cases/auth/login"
+import config from "../../config"
 
 
 
@@ -47,7 +48,7 @@ const authController = (
 
             res.cookie('jwt', response.token, {
                 httpOnly: true,
-                secure: false,
+                secure: config.nodeEnvironment === 'production',
                 // signed: false,
                 maxAge: 24 * 60 * 60 * 1000
             })
@@ -68,7 +69,7 @@ const authController = (
             // Store it on cookie
             res.cookie('jwt', response.token, {
                 httpOnly: true,
-                secure: false,
+                secure: config.nodeEnvironment === 'production',
                 // signed: false,
                 maxAge: 24 * 60 * 60 * 1000
             })
@@ -88,7 +89,7 @@ const authController = (
                 // Store it on req cookie
                 res.cookie('jwt', response.token, {
                     httpOnly: true,
-                    secure: false,
+                    secure: config.nodeEnvironment === 'production',
                     // signed: false,
                     maxAge: 24 * 60 * 60 * 1000
                 })
